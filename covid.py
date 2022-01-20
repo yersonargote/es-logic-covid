@@ -72,15 +72,19 @@ def main():
     healthy = deepcopy(knowledge)
 
 # Test symptomatic
+    print('Test para covid sintomatico.')
     test_symptomatic(symp, diagnostics)
 
 # Test asymptomatic
+    print('Test para covid asintomatico.')
     test_asymptomatic(asymp, diagnostics)
 
 # Test respiratory disease
+    print('Test para enfermedad respiratoria.')
     test_respiratory_disease(res_dis, diagnostics)
 
 # Test healthy
+    print('Test para sano.')
     test_healthy(healthy, diagnostics)
 
 
