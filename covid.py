@@ -7,7 +7,7 @@ from globals import *
 def check_knowledge(knowledge, symbols):
     for symbol in symbols:
         if model_check(knowledge, symbol):
-            print(f"{symbol}: YES")
+            print(f"{symbol}")
    
     return knowledge, diagnostics
 
@@ -18,7 +18,8 @@ def test_symptomatic(knowledge: And, diagnostics: List[Symbol]):
             test,
             Not(dyspnea),
             fever,
-            cough
+            cough,
+            complete_scheme
         )
     )
 
@@ -31,7 +32,8 @@ def test_asymptomatic(knowledge: And, diagnostics: List[Symbol]):
             test,
             Not(dyspnea),
             Not(fever),
-            Not(cough)
+            Not(cough),
+            incomplete_scheme
         )
     )
 
@@ -73,18 +75,22 @@ def main():
 
 # Test symptomatic
     print('Test para covid sintomatico.')
+    print('- Diagnostico: ', end='')
     test_symptomatic(symp, diagnostics)
 
 # Test asymptomatic
     print('Test para covid asintomatico.')
+    print('- Diagnostico: ', end='')
     test_asymptomatic(asymp, diagnostics)
 
 # Test respiratory disease
     print('Test para enfermedad respiratoria.')
+    print('- Diagnostico: ', end='')
     test_respiratory_disease(res_dis, diagnostics)
 
 # Test healthy
     print('Test para sano.')
+    print('- Diagnostico: ', end='')
     test_healthy(healthy, diagnostics)
 
 
