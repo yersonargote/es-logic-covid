@@ -1,4 +1,3 @@
-from typing import List
 from copy import deepcopy
 from logic import *
 from globals import *
@@ -7,91 +6,67 @@ from globals import *
 def check_knowledge(knowledge, symbols):
     for symbol in symbols:
         if model_check(knowledge, symbol):
-            print(f"{symbol}")
+            print(f"    {symbol}")
    
     return knowledge, diagnostics
 
-
-def test_symptomatic(knowledge: And, diagnostics: List[Symbol]):
-    knowledge.add(
-        And(
-            test,
-            Not(dyspnea),
-            fever,
-            cough,
-            complete_scheme
-        )
-    )
-
-    check_knowledge(knowledge=knowledge, symbols=diagnostics)
+    
+test_symptomatic = And(
+    test,
+    Not(dyspnea),
+    fever,
+    cough,
+    complete_scheme
+)
 
 
-def test_asymptomatic(knowledge: And, diagnostics: List[Symbol]):
-    knowledge.add(
-        And(
-            test,
-            Not(dyspnea),
-            Not(fever),
-            Not(cough),
-            incomplete_scheme
-        )
-    )
-
-    check_knowledge(knowledge=knowledge, symbols=diagnostics)
+test_asymptomatic = And(
+    test,
+    Not(dyspnea),
+    Not(fever),
+    Not(cough),
+    incomplete_scheme
+)
 
 
-def test_respiratory_disease(knowledge: And, diagnostics: List[Symbol]):
-    knowledge.add(
-        And(
-            Not(test),
-            Not(dyspnea),
-            fever,
-            Not(cough)
-        )
-    )
-
-    check_knowledge(knowledge=knowledge, symbols=diagnostics)
+test_respiratory_disease = And(
+    Not(test),
+    Not(dyspnea),
+    fever,
+    Not(cough)
+)
 
 
-
-def test_healthy(knowledge: And, diagnostics: List[Symbol]):
-    knowledge.add(
-        And(
-            Not(test),
-            Not(dyspnea),
-            Not(fever),
-            Not(cough)
-        )
-    )
-    check_knowledge(knowledge=knowledge, symbols=diagnostics)
+test_healthy = And(
+    Not(test),
+    Not(dyspnea),
+    Not(fever),
+    Not(cough)
+)
 
 
 def main():
 
-    symp = deepcopy(knowledge)
-    asymp = deepcopy(knowledge)
-    res_dis = deepcopy(knowledge)
-    healthy = deepcopy(knowledge)
+    symp: And  = deepcopy(knowledge)
+    asymp: And = deepcopy(knowledge)
+    res_dis: And = deepcopy(knowledge)
+    healthy: And = deepcopy(knowledge)
 
-# Test symptomatic
-    print('Test para covid sintomatico.')
-    print('- Diagnostico: ', end='')
-    test_symptomatic(symp, diagnostics)
+    # Test
+    symp.add(test_asymptomatic)
+    asymp.add(test_symptomatic)
+    res_dis.add(test_respiratory_disease)
+    healthy.add(test_healthy)
+    tests = [
+        ("Test 1.", symp),
+        ("Test 2.", asymp),
+        ("Test 3.", res_dis),
+        ("Test 4.", healthy),
+    ]
 
-# Test asymptomatic
-    print('Test para covid asintomatico.')
-    print('- Diagnostico: ', end='')
-    test_asymptomatic(asymp, diagnostics)
-
-# Test respiratory disease
-    print('Test para enfermedad respiratoria.')
-    print('- Diagnostico: ', end='')
-    test_respiratory_disease(res_dis, diagnostics)
-
-# Test healthy
-    print('Test para sano.')
-    print('- Diagnostico: ', end='')
-    test_healthy(healthy, diagnostics)
+    for test, know in tests:
+        print(test)
+        check_knowledge(knowledge=know, symbols=diagnostics)
 
 
 if __name__ == '__main__':
