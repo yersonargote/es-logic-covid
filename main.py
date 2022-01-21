@@ -8,7 +8,8 @@ test_symptomatic = And(
     Not(dyspnea),
     fever,
     cough,
-    complete_scheme
+    incomplete_scheme,
+    comorbidities
 )
 
 
@@ -17,8 +18,7 @@ test_asymptomatic = And(
     Not(dyspnea),
     Not(fever),
     Not(cough),
-    incomplete_scheme
-
+    complete_scheme
 )
 
 
@@ -45,8 +45,8 @@ def main():
     healthy: And = deepcopy(knowledge)
 
     # Tests
-    symp.add(test_asymptomatic)
-    asymp.add(test_symptomatic)
+    symp.add(test_symptomatic)
+    asymp.add(test_asymptomatic)
     res_dis.add(test_respiratory_disease)
     healthy.add(test_healthy)
     tests = [

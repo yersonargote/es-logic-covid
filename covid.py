@@ -1,5 +1,6 @@
 from logic import *
 
+
 # Check knowledge
 def check_knowledge(knowledge, symbols):
     for symbol in symbols:
@@ -22,7 +23,7 @@ incomplete_scheme = Symbol("Esquema incompleto")
 complete_scheme = Symbol("Esquema completo")
 
 
-# Deathly
+# Mortality
 high_deathly = Symbol("Mortalidad Alta")
 average_deathly = Symbol("Mortalidad Media")
 low_deahtly = Symbol("Mortalidad Baja")
@@ -48,11 +49,11 @@ knowledge = And(
     Implication(And(Not(test), symtom), respiratory_disease),
     Implication(And(Not(test), no_symtom), healthy),
     # Additional
-    Implication(And(covid, complete_scheme) , low_deahtly),
-    Implication(And(covid, incomplete_scheme), average_deathly),
-    Implication(And(covid, no_scheme), high_deathly),
-    Implication(And(covid, complete_scheme, comorbidities), average_deathly),
+    Implication(And(covid, complete_scheme, Not(comorbidities)) , low_deahtly),
+    Implication(And(covid, complete_scheme, comorbidities) , average_deathly),
+    Implication(And(covid, incomplete_scheme, Not(comorbidities)), average_deathly),
     Implication(And(covid, incomplete_scheme, comorbidities), high_deathly),
+    Implication(And(covid, no_scheme, Not(comorbidities)), high_deathly),
     Implication(And(covid, no_scheme, comorbidities), high_deathly)
 )
 
