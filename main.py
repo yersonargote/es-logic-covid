@@ -18,7 +18,8 @@ test_asymptomatic = And(
     Not(dyspnea),
     Not(fever),
     Not(cough),
-    complete_scheme
+    complete_scheme,
+    Not(comorbidities)
 )
 
 
