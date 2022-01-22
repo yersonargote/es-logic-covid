@@ -5,21 +5,23 @@ from covid import *
 
 test_symptomatic = And(
     test,
+    delta,
     Not(dyspnea),
     fever,
     cough,
     incomplete_scheme,
-    comorbidities
+    Not(comorbidities)
 )
 
 
 test_asymptomatic = And(
     test,
+    omicron,
     Not(dyspnea),
     Not(fever),
     Not(cough),
     complete_scheme,
-    Not(comorbidities)
+    comorbidities
 )
 
 
@@ -27,7 +29,9 @@ test_respiratory_disease = And(
     Not(test),
     Not(dyspnea),
     fever,
-    Not(cough)
+    Not(cough),
+    incomplete_scheme,
+    Not(comorbidities)
 )
 
 
@@ -35,7 +39,9 @@ test_healthy = And(
     Not(test),
     Not(dyspnea),
     Not(fever),
-    Not(cough)
+    Not(cough),
+    no_scheme,
+    comorbidities
 )
 
 
